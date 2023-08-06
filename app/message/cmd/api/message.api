@@ -1,0 +1,51 @@
+syntax = "v1"
+
+type Message {
+	Id         int64 `json:"id"`
+	ToUserId   int64 `json:"to_user_id"`
+	FromUserId int64 `json:"from_user_id"`
+	Content    int64 `json:"content"`
+	CreateTime int64 `json:"create_time"`
+}
+
+type (
+	DouyinMessageChatRequestt {
+		Token      string `json:"token"`
+		ToUserId   int64  `json:"to_user_id"`
+		PreMsgTime int64  `json:"pre_msg_time"` // 上次最新消息的时间
+	}
+
+	DouyinMessageChatResponse {
+		StatusCode  int32     `json:"status_code"` // 0-成功, 其他-失败
+		StatusMsg   int32     `json:"status_msg"`
+		MessageList []Message `json:"message_list"`
+	}
+
+	DouyinMessageActionRequest {
+		Token      string `json:"token"`
+		ToUserId   int64  `json:"to_user_id"`
+		ActionType int32  `json:"action_type"` // 1-发送消息
+		Content    string `json:"content"`
+	}
+
+	DouyinMessageActionResponse {
+		StatusCode int32 `json:"status_code"`
+		StatusMsg  int32 `json:"status_msg"`
+	}
+)
+
+@server(
+	prefix: douyin/message
+	jwt: JwtAuth
+	middleware: MessageMiddleWare
+)
+
+service user {
+	@doc "发送消息"
+	@handler messageChat
+	post /chat (DouyinMessageChatRequestt) returns (DouyinMessageChatResponse)
+
+	@doc "聊天记录"
+	@handler messageAction
+	get /action (DouyinMessageActionRequest) returns (DouyinMessageActionResponse)
+}
