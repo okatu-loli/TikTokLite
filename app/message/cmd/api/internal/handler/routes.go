@@ -11,21 +11,18 @@ import (
 
 func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
-		rest.WithMiddlewares(
-			[]rest.Middleware{serverCtx.MessageMiddleWare},
-			[]rest.Route{
-				{
-					Method:  http.MethodPost,
-					Path:    "/chat",
-					Handler: messageChatHandler(serverCtx),
-				},
-				{
-					Method:  http.MethodGet,
-					Path:    "/action",
-					Handler: messageActionHandler(serverCtx),
-				},
-			}...,
-		),
+		[]rest.Route{
+			{
+				Method:  http.MethodGet,
+				Path:    "/chat",
+				Handler: messageChatHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/action",
+				Handler: messageActionHandler(serverCtx),
+			},
+		},
 		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
 		rest.WithPrefix("/douyin/message"),
 	)

@@ -23,6 +23,7 @@ func NewMessageActionLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Mes
 	}
 }
 
+// MessageAction 发送消息
 func (l *MessageActionLogic) MessageAction(req *types.DouyinMessageActionRequest) (resp *types.DouyinMessageActionResponse, err error) {
 	// todo: add your logic here and delete this line
 

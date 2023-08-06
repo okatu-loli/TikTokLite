@@ -13,6 +13,7 @@ type (
 	MessageModel interface {
 		messageModel
 		customMessageLogicModel
+		myMessageModel
 	}
 
 	customMessageModel struct {

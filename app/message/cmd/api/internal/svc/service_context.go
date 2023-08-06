@@ -2,18 +2,18 @@ package svc
 
 import (
 	"TikTokLite/app/message/cmd/api/internal/config"
-	"TikTokLite/app/message/cmd/api/internal/middleware"
-	"github.com/zeromicro/go-zero/rest"
+	"TikTokLite/app/message/cmd/rpc/message"
+	"github.com/zeromicro/go-zero/zrpc"
 )
 
 type ServiceContext struct {
-	Config            config.Config
-	MessageMiddleWare rest.Middleware
+	Config           config.Config
+	MessageRpcClient message.MessageZrpcClient
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
 	return &ServiceContext{
-		Config:            c,
-		MessageMiddleWare: middleware.NewMessageMiddleWareMiddleware().Handle,
+		Config:           c,
+		MessageRpcClient: message.NewMessageZrpcClient(zrpc.MustNewClient(c.MessageRpcConfig)),
 	}
 }
