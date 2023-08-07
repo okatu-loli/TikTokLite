@@ -17,7 +17,7 @@ type DouyinMessageChatRequestt struct {
 
 type DouyinMessageChatResponse struct {
 	StatusCode  int32     `json:"status_code"` // 0-成功, 其他-失败
-	StatusMsg   int32     `json:"status_msg"`
+	StatusMsg   string    `json:"status_msg"`
 	MessageList []Message `json:"message_list"`
 }
 
@@ -29,6 +29,6 @@ type DouyinMessageActionRequest struct {
 }
 
 type DouyinMessageActionResponse struct {
-	StatusCode int32 `json:"status_code"`
-	StatusMsg  int32 `json:"status_msg"`
+	StatusCode int32  `json:"status_code"`
+	StatusMsg  string `json:"status_msg"`
 }

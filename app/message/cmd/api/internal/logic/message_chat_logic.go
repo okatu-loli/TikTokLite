@@ -1,6 +1,7 @@
 package logic
 
 import (
+	"TikTokLite/app/message/cmd/rpc/message"
 	"context"
 
 	"TikTokLite/app/message/cmd/api/internal/svc"
@@ -26,6 +27,35 @@ func NewMessageChatLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Messa
 // MessageChat 获取消息列表
 func (l *MessageChatLogic) MessageChat(req *types.DouyinMessageChatRequestt) (resp *types.DouyinMessageChatResponse, err error) {
 	// todo: add your logic here and delete this line
+	in := &message.DouyinMessageChatRequest{
+		Token:      req.Token,
+		ToUserId:   req.ToUserId,
+		PreMsgTime: req.PreMsgTime,
+	}
 
-	return
+	res, err := l.svcCtx.MessageRpcClient.Chat(l.ctx, in)
+
+	if err != nil {
+		return &types.DouyinMessageChatResponse{
+			StatusCode:  res.StatusCode,
+			StatusMsg:   res.GetStatusMsg(),
+			MessageList: nil,
+		}, err
+	}
+
+	messageList := make([]types.Message, len(res.MessageList))
+	for i, v := range res.MessageList {
+		messageList[i] = types.Message{
+			Id:         v.Id,
+			ToUserId:   v.ToUserId,
+			FromUserId: v.FromUserId,
+			Content:    v.Content,
+			CreateTime: v.CreateTime,
+		}
+	}
+	return &types.DouyinMessageChatResponse{
+		StatusCode:  res.StatusCode,
+		StatusMsg:   res.GetStatusMsg(),
+		MessageList: messageList,
+	}, err
 }

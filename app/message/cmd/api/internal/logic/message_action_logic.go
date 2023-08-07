@@ -1,6 +1,8 @@
 package logic
 
 import (
+	"TikTokLite/app/message/cmd/rpc/message"
+	"TikTokLite/common/dyerr"
 	"context"
 
 	"TikTokLite/app/message/cmd/api/internal/svc"
@@ -26,6 +28,23 @@ func NewMessageActionLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Mes
 // MessageAction 发送消息
 func (l *MessageActionLogic) MessageAction(req *types.DouyinMessageActionRequest) (resp *types.DouyinMessageActionResponse, err error) {
 	// todo: add your logic here and delete this line
+	if req.ActionType != 1 {
+		statusMsg := "参数错误"
+		return &types.DouyinMessageActionResponse{
+			StatusCode: int32(dyerr.NO_REQUEST),
+			StatusMsg:  statusMsg,
+		}, nil
+	}
 
-	return
+	in := &message.DouyinMessageActionRequest{
+		Token:      req.Token,
+		ToUserId:   req.ToUserId,
+		ActionType: req.ActionType,
+		Content:    req.Content,
+	}
+	res, err := l.svcCtx.MessageRpcClient.Action(l.ctx, in)
+	return &types.DouyinMessageActionResponse{
+		StatusCode: res.StatusCode,
+		StatusMsg:  res.GetStatusMsg(),
+	}, err
 }

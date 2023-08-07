@@ -105,6 +105,7 @@ func (m *defaultMessageModel) getCacheKeys(data *Message) []string {
 		tiktokliteMessageIdKey,
 	}
 	cacheKeys = append(cacheKeys, m.customCacheKeys(data)...)
+
 	return cacheKeys
 }
 

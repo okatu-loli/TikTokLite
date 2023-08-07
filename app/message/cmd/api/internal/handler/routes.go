@@ -23,7 +23,6 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: messageActionHandler(serverCtx),
 			},
 		},
-		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
 		rest.WithPrefix("/douyin/message"),
 	)
 }

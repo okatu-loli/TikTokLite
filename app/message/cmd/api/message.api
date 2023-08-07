@@ -17,7 +17,7 @@ type (
 
 	DouyinMessageChatResponse {
 		StatusCode  int32     `json:"status_code"` // 0-成功, 其他-失败
-		StatusMsg   int32     `json:"status_msg"`
+		StatusMsg   string    `json:"status_msg"`
 		MessageList []Message `json:"message_list"`
 	}
 
@@ -29,14 +29,14 @@ type (
 	}
 
 	DouyinMessageActionResponse {
-		StatusCode int32 `json:"status_code"`
-		StatusMsg  int32 `json:"status_msg"`
+		StatusCode int32  `json:"status_code"`
+		StatusMsg  string `json:"status_msg"`
 	}
 )
 
 @server(
 	prefix: douyin/message
-	jwt: JwtAuth
+	//	jwt: JwtAuth
 )
 
 service user {

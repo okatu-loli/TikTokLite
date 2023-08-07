@@ -1,6 +1,7 @@
 package model
 
 import (
+	"fmt"
 	"github.com/zeromicro/go-zero/core/stores/cache"
 	"gorm.io/gorm"
 )
@@ -35,5 +36,19 @@ func (m *defaultMessageModel) customCacheKeys(data *Message) []string {
 	if data == nil {
 		return []string{}
 	}
-	return []string{}
+
+	return []string{
+		m.getChatsKey(data.FromUserId, data.ToUserId),
+	}
+}
+
+func (m *defaultMessageModel) getChatsKey(id1, id2 int64) string {
+	maxId := func(a, b int64) int64 {
+		if a > b {
+			return a
+		}
+		return b
+	}(id1, id2)
+	chatsKey := fmt.Sprintf("%s%v%v", cacheChatsFromToIdPrefix, maxId, id1+id2-maxId)
+	return chatsKey
 }
