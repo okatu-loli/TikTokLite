@@ -1,0 +1,58 @@
+syntax = "v1"
+
+info(
+	title: "视频服务"
+	desc: "视频服务"
+	author: "px"
+	email: "1780759836@qq.com"
+	version: 1.0
+)
+
+type User {
+	Id               int64  `json:"id"`
+	Username         string `json:"username"`
+	Follow_count     int64  `json:"follow_count"`
+	Follower_count   int64  `json:"follower_count"`
+	Is_follow        bool   `json:"is_follow"`
+	Avatar           string `json:"avatar"`
+	Background_image string `json:"background_image"`
+	Signature        string `json:"signature"`
+	Total_favorited  int64  `json:"total_favorited"`
+	Work_count       int64  `json:"work_count"`
+	Favorite_count   int64  `json:"favorite_count"`
+}
+
+type Video {
+	Id             int64  `json:"id"`
+	Author         User   `json:"author"`
+	Play_url       string `json:"play_url"`
+	Cover_url      string `json:"cover_url"`
+	Favorite_count int64  `json:"favorite_count"`
+	Comment_count  int64  `json:"comment_count"`
+	Is_Favorite    bool   `json:"is_favorite"`
+	Title          string `json:"title"`
+}
+
+//发布视频
+type (
+	PublishVideoReq {
+		//Data  file `json:"data"`
+		Title string `json:"title"`
+	}
+	PublishVideoResp {
+		StatusCode int32  `json:"status_code"`
+		StatusMsg  string `json:"status_msg"`
+	}
+)
+
+//有关用户的需要Jwt认证
+@server(
+	prefix: douyin/publish
+	jwt: JwtAuth
+)
+service video{
+	
+	@handler publish
+	post /action (PublishVideoReq) returns (PublishVideoResp)
+	
+}

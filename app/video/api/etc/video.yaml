@@ -1,0 +1,26 @@
+Name: video
+Host: 0.0.0.0
+Port: 8888
+
+#jwt验证
+JwtAuth:
+  AccessSecret: shushuwoyazhendeyaojile
+  AccessExpire: 31536000
+
+
+#缓存
+Redis:
+  Host: 127.0.0.1:6379
+  Type: node
+  Key: usercenter-rpc
+
+Cache:
+  - Host: 127.0.0.1:6379
+    Pass:
+    Type: node
+
+#数据库
+DB:
+  DataSource: root:123456@tcp(127.0.0.1:3306)/minidy?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+
+##需要Rpc
