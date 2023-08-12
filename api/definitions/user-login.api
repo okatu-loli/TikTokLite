@@ -1,0 +1,26 @@
+syntax = "v1"
+
+info(
+	title: "User Login API"
+	desc: "API for user login"
+	author: "QianShi"
+	email: "1835038031@qq.com"
+	version: "1.0"
+)
+
+service user-login {
+	@handler Login
+	post /douyin/user/login (LoginRequest) returns (LoginResponse)
+}
+
+type LoginRequest {
+	Username string `validate:"required"`
+	Password string `validate:"required"`
+}
+
+type LoginResponse {
+	StatusCode int    `json:"status_code"`
+	StatusMsg  string `json:"status_msg"`
+	UserId     int    `json:"user_id"`
+	Token      string `json:"token"`
+}
