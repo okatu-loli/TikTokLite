@@ -75,7 +75,8 @@ func (l *RegisterLogic) Register(req *types.RegisterRequest) (resp *types.Regist
 
 	// Create corresponding user info in UserInfo table
 	userInfo := model.UserInfo{
-		ID: authUser.ID,
+		ID:   authUser.ID,
+		Name: authUser.Username,
 	}
 	if err = tx.Create(&userInfo).Error; err != nil {
 		tx.Rollback()

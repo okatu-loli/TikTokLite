@@ -7,7 +7,7 @@ type AuthUser struct {
 }
 
 type UserInfo struct {
-	ID              uint   `gorm:"primaryKey;foreignKey:ID" ;json:"user_id"` // 设置外键约束
+	ID              uint   `json:"id"` // 设置外键约束
 	Name            string `json:"name"`
 	FollowCount     int    `json:"follow_count"`
 	FollowerCount   int    `json:"follower_count"`
