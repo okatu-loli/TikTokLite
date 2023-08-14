@@ -2,6 +2,7 @@ package logic
 
 import (
 	"TikTokLite/app/message/cmd/rpc/message"
+	"TikTokLite/common/ctxdata"
 	"TikTokLite/common/dyerr"
 	"context"
 
@@ -37,7 +38,7 @@ func (l *MessageActionLogic) MessageAction(req *types.DouyinMessageActionRequest
 	}
 
 	in := &message.DouyinMessageActionRequest{
-		Token:      req.Token,
+		FromUserId: ctxdata.GetUidFromCtx(l.ctx), // 从上下文中拿到的id就是发送请求的用户的id
 		ToUserId:   req.ToUserId,
 		ActionType: req.ActionType,
 		Content:    req.Content,

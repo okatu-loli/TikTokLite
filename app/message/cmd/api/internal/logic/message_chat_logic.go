@@ -2,6 +2,7 @@ package logic
 
 import (
 	"TikTokLite/app/message/cmd/rpc/message"
+	"TikTokLite/common/ctxdata"
 	"context"
 
 	"TikTokLite/app/message/cmd/api/internal/svc"
@@ -28,7 +29,7 @@ func NewMessageChatLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Messa
 func (l *MessageChatLogic) MessageChat(req *types.DouyinMessageChatRequestt) (resp *types.DouyinMessageChatResponse, err error) {
 	// todo: add your logic here and delete this line
 	in := &message.DouyinMessageChatRequest{
-		Token:      req.Token,
+		FromUserId: ctxdata.GetUidFromCtx(l.ctx), // 从上下文中拿到id就是发送请求的用户id
 		ToUserId:   req.ToUserId,
 		PreMsgTime: req.PreMsgTime,
 	}

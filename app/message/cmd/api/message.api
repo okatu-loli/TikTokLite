@@ -1,5 +1,13 @@
 syntax = "v1"
 
+info(
+	title: "Message API"
+	desc: "API for send and get message"
+	author: "GuoChenxu"
+	email: "2269409349@qq.com"
+	version: "1.0"
+)
+
 type Message {
 	Id         int64  `json:"id"`
 	ToUserId   int64  `json:"to_user_id"`
@@ -36,7 +44,7 @@ type (
 
 @server(
 	prefix: douyin/message
-	//	jwt: JwtAuth
+	jwt: JwtAuth
 )
 
 service user {

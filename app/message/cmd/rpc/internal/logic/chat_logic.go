@@ -1,12 +1,10 @@
 package logic
 
 import (
-	"TikTokLite/common/dyerr"
-	"context"
-	"strconv"
-
 	"TikTokLite/app/message/cmd/rpc/internal/svc"
 	"TikTokLite/app/message/cmd/rpc/pb"
+	"TikTokLite/common/dyerr"
+	"context"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -28,11 +26,7 @@ func NewChatLogic(ctx context.Context, svcCtx *svc.ServiceContext) *ChatLogic {
 // Chat 获取消息
 func (l *ChatLogic) Chat(in *pb.DouyinMessageChatRequest) (*pb.DouyinMessageChatResponse, error) {
 	// todo: add your logic here and delete this line
-	// todo 仅供测试
-	a, _ := strconv.Atoi(in.Token)
-	fromUserId := int64(a)
-
-	//fromUserId := ctxdata.GetUidFromCtx(l.ctx)
+	fromUserId := in.FromUserId
 	messages, err := l.svcCtx.MessageModel.FindChats(l.ctx, fromUserId, in.ToUserId, in.PreMsgTime)
 
 	if err != nil {
