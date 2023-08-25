@@ -23,22 +23,22 @@ type FavoriteList struct {
 
 func (fl *FavoriteList) GetFavoriteListByUid(uid int64) {
 	fl.Size = 0
-	fl.FavouriteData = fl.f.GetFavouritesByUid(uid)
+	fl.FavouriteData = fl.f.GetFavouritesByUid_grom(uid)
 	//fmt.Printf("%+v", favouriteData)
 
 	for _, f := range fl.FavouriteData {
-		fl.VideosData = append(fl.VideosData, fl.v.GetVideosByAid(f.Id)...)
+		fl.VideosData = append(fl.VideosData, fl.v.GetVideosByAid_grom(f.Id)...)
 		fl.Size++
 	}
 	//fmt.Printf("%+v", videosData)
 
 	for _, f := range fl.VideosData {
-		fl.UsersData = append(fl.UsersData, fl.u.GetUserById(f.Id))
+		fl.UsersData = append(fl.UsersData, fl.u.GetUserById_grom(f.Id))
 	}
 	//fmt.Printf("%+v", fl.usersData)
 
 	for i, _ := range fl.VideosData {
-		fl.FollowData = append(fl.FollowData, fl.fo.GetFollowsByUids(uid, fl.UsersData[i].Id))
+		fl.FollowData = append(fl.FollowData, fl.fo.GetFollowsByUids_grom(uid, fl.UsersData[i].Id))
 	}
 
 }

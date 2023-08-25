@@ -26,12 +26,14 @@ func NewGetFavoriteListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *G
 }
 func action(req *types.FavoriteListReq) (resp *types.FavoriteListRes, err error) {
 	// Go连接Mysql示例
-	fmt.Println(req.UserID)
+	fmt.Println("\n\n>>>" + req.UserID)
 	var f FavoriteList
+	fmt.Println("\n\n>>>GetFavoriteListByUid")
 	f.GetFavoriteListByUid(utool.S2I64(req.UserID))
 	//f.PrintModel("FavoriteList")
-	fmt.Printf("%#v", f.FollowData)
+	fmt.Printf("1>>>%#v", f.FollowData)
 	f.PutMs2Api()
+	fmt.Printf("2>>>OK")
 	return &f.FavouriteListRes, nil
 }
 func (l *GetFavoriteListLogic) GetFavoriteList(req *types.FavoriteListReq) (resp *types.FavoriteListRes, err error) {

@@ -22,6 +22,13 @@ type Video struct {
 	DeletedAt     sql.NullTime `db:"deleted_at"`     // 逻辑删除
 }
 
+func (f Video) GetVideosByVid_grom(vid int64) []Video {
+	var fs []Video
+	db, _ := mysqlop.GetDBGrom()
+	db.Where("id=?", vid).Find(&fs)
+	return fs
+}
+
 func (f Video) GetVideosByVid(vid int) []Video {
 	db, _ := mysqlop.GetDB()
 	//1.sql语句
@@ -51,6 +58,14 @@ func (f Video) GetVideosByVid(vid int) []Video {
 	}
 	return F
 }
+
+func (f Video) GetVideosByAid_grom(aid int64) []Video {
+	var fs []Video
+	db, _ := mysqlop.GetDBGrom()
+	db.Where("author_id=?", aid).Find(&fs)
+	return fs
+}
+
 func (f Video) GetVideosByAid(aid int64) []Video {
 	db, _ := mysqlop.GetDB()
 	//1.sql语句

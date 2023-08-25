@@ -19,6 +19,13 @@ type Follow struct {
 	DeletedAt  sql.NullTime `db:"deleted_at"`  // 逻辑删除
 }
 
+func (f Follow) GetFollowsByUids_grom(uid int64, touid int64) Follow {
+	var fs Follow
+	db, _ := mysqlop.GetDBGrom()
+	db.Where("user_id=  ? and to_user_id=?", uid, touid).Find(&fs)
+	return fs
+}
+
 func (f Follow) GetFollowsByUids(uid int64, touid int64) Follow {
 	db, _ := mysqlop.GetDB()
 	//1.sql语句
@@ -56,7 +63,7 @@ func (f Follow) GetFollowsByUids(uid int64, touid int64) Follow {
 func (f Follow) Print(text string) {
 	println(text)
 	println("vvvvvvvvvvvvvvvvvvvv\n")
-	fmt.Printf("Id        %v\nUserId    %v\nToUserId  %v\nStatus    %v\nCreateTime%v\nUpdateTime%v\nDeletedAt ",
+	fmt.Printf("Id        %v\nUserId    %v\nToUserId  %v\nStatus    %v\nCreateTime%v\nUpdateTime%v\nDeletedAt %v",
 		f.Id,
 		f.UserId,
 		f.ToUserId,

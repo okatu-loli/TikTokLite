@@ -21,6 +21,12 @@ type User struct {
 	DeletedAt     sql.NullTime `db:"deleted_at"`     // 逻辑删除
 }
 
+func (f User) GetUserById_grom(uid int64) User {
+	var fs User
+	db, _ := mysqlop.GetDBGrom()
+	db.Where(uid).Find(&fs)
+	return fs
+}
 func (u User) GetUserById(uid int64) User {
 	db, _ := mysqlop.GetDB()
 	//1.sql语句
@@ -58,21 +64,21 @@ func (u User) GetBackgroundImage() string {
 }
 func (u User) GetUserFavoriteCount() int64 {
 	var f Favourite
-	return int64(len(f.GetFavouritesByUid(u.Id)))
+	return int64(len(f.GetFavouritesByUid_grom(u.Id)))
 
 }
 
 func (u User) GetUserTotalFavorited() string {
 	var f Favourite
-	return strconv.Itoa(len(f.GetFavouritesByUid(u.Id)))
-
+	return strconv.Itoa(len(f.GetFavouritesByUid_grom(u.Id)))
 }
+
 func (u User) GetSignature() string {
 	return ""
 }
 func (u User) GetWorkCount() int64 {
 	var video Video
-	videos := video.GetVideosByAid(u.Id)
+	videos := video.GetVideosByAid_grom(u.Id)
 	var count int64 = 0
 	for _, v := range videos {
 		count += v.FavoriteCount

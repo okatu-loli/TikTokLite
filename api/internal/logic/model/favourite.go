@@ -43,7 +43,12 @@ func (f Favourite) GetFavouritesByUid(uid int64) []Favourite {
 	}
 	return F
 }
-
+func (f Favourite) GetFavouritesByUid_grom(uid int64) []Favourite {
+	var fs []Favourite
+	db, _ := mysqlop.GetDBGrom()
+	db.Where("user_id=  ?", uid).Find(&fs)
+	return fs
+}
 func (f Favourite) Print(text string) {
 	println(text)
 	println("vvvvvvvvvvvvvvvvvvvv\n")
